@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="app_green">#81C784</color>          <!-- bubble / primary -->
+    <color name="app_green_dark">#4CAF50</color>     <!-- buttons / accents -->
+    <color name="chat_bg_light">#F1FFF4</color>      <!-- screen background -->
+    <color name="chat_bubble_other">#FFFFFF</color>  <!-- other user bubble -->
+    <color name="chat_bubble_border">#D0E6D6</color> <!-- subtle border -->
+</resources>
