@@ -10,60 +10,76 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prelovedmarketplaceapp.R;
 import com.example.prelovedmarketplaceapp.model.Message;
+import com.example.prelovedmarketplaceapp.model.User;
 
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
-    private List<Message> messages;
+    private static final int VIEW_TYPE_MESSAGE_SENT = 1;
+    private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    public MessageAdapter(List<Message> messages) {
-        this.messages = messages;
+    private final List<Message> messageList;
+    private final User currentUser;
+
+    public MessageAdapter(List<Message> messageList, User currentUser) {
+        this.messageList = messageList;
+        this.currentUser = currentUser;
     }
 
-    public void addMessage(Message message) {
-        messages.add(message);
-        notifyItemInserted(messages.size() - 1);
+    @Override
+    public int getItemViewType(int position) {
+        Message message = messageList.get(position);
+
+        // If the sender's ID matches the current user's name (our pseudo-ID)
+        if (message.getSenderId().equals(currentUser.getName())) {
+            return VIEW_TYPE_MESSAGE_SENT;
+        } else {
+            return VIEW_TYPE_MESSAGE_RECEIVED;
+        }
     }
 
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_message, parent, false);
+        View view;
+        if (viewType == VIEW_TYPE_MESSAGE_SENT) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_message_sent, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_message_received, parent, false);
+        }
         return new MessageViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        holder.bind(messages.get(position));
+        Message message = messageList.get(position);
+        holder.bind(message);
     }
 
     @Override
     public int getItemCount() {
-        return messages.size();
+        return messageList.size();
+    }
+
+    // Method to update and scroll to the bottom when a new message is sent
+    public void addMessage(Message message) {
+        messageList.add(message);
+        notifyItemInserted(messageList.size() - 1);
     }
 
     static class MessageViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvMessageOther, tvMessageMine;
+        TextView messageText;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvMessageOther = itemView.findViewById(R.id.tvMessageOther);
-            tvMessageMine = itemView.findViewById(R.id.tvMessageMine);
+            messageText = itemView.findViewById(R.id.tv_message_text);
         }
 
         public void bind(Message message) {
-            if (message.isMine()) {
-                tvMessageMine.setVisibility(View.VISIBLE);
-                tvMessageOther.setVisibility(View.GONE);
-                tvMessageMine.setText(message.getText());
-            } else {
-                tvMessageOther.setVisibility(View.VISIBLE);
-                tvMessageMine.setVisibility(View.GONE);
-                tvMessageOther.setText(message.getText());
-            }
+            messageText.setText(message.getText());
         }
     }
 }

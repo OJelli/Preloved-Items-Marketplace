@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,21 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PrelovedMarketplaceApp">
-        <activity
-            android:name=".ui.chat.ConversationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.chat.ChatListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.home.HomeActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.auth.SplashActivity"
             android:exported="true">
@@ -34,6 +23,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.listing.CreateListingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.listing.ListingDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.listing.PickupLocationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.chat.ChatListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+
     </application>
 
 </manifest>
